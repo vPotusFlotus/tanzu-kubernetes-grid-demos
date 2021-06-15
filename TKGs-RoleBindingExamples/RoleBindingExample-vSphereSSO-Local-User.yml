@@ -1,0 +1,22 @@
+# Example from https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-6DE4016E-D51C-4E9B-9F8B-F6577A18F296.html#GUID-6DE4016E-D51C-4E9B-9F8B-F6577A18F296
+# and https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+apiVersion: rbac.authorization.k8s.io/v1
+#The following example RoleBinding binds the vCenter Single Sign-On local user named Joe to the default ClusterRole named edit. 
+# This role permits read/write access to most objects in a namespace, in this case the default namespace.
+kind: RoleBinding
+metadata:
+  name: rolebinding-cluster-user-devuser
+  namespace: default
+subjects:
+# You can specify more than one "subject"
+- kind: User
+  name: sso:devuser@vsphere.local #sso:<username>@<domain>
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  # "roleRef" specifies the binding to a Role / ClusterRole
+  kind: ClusterRole #this must be Role or ClusterRole
+  name: edit # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+
+
+
