@@ -6,7 +6,7 @@ apiVersion: run.tanzu.vmware.com/v1alpha1      #TKGS API endpoint
 kind: TanzuKubernetesCluster                   #required parameter
 metadata:
   name: tkgs-example-cluster-small             #cluster name, user defined
-  namespace:  nethys-k8s-ns01                  #vsphere namespace
+  namespace:  Namespace01                      #vsphere namespace
 spec:
   distribution:
     version: 1.19                              #Resolves to the latest v1.19 image
