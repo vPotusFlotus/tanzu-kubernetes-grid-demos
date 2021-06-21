@@ -16,3 +16,8 @@ For more information, please visit: https://itq.eu/technology/cloud-native-appli
 This repository is created by and for ITQ employees, and our customers, for showcasing and demonstrating the capabilities of VMware's Tanzu Kubernetes Grid product portfolio. 
 
 It contains sample applications, code demonstrations, config examples and accompanying documentation that we use with our customers during proof-of-concept engagements. 
+
+
+# Guidelines and Rules of Conduct
+
+Please refer to [[Content-Guidelines]] for naming conventions

@@ -1,0 +1,5 @@
+service:
+ loadBalancerIP: "10.1.1.20" #This is an address in the VIP range of the Load-Balancer you are using in kubernetes. 
+ tls:
+  commonName: "harborpoc.customerdomain.local"
+externalURL: "harborpoc.customerdomain.local"
