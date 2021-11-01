@@ -1,0 +1,35 @@
+# This example deployment makes a public image and create a service of type LoadBalancer, using the default cloud-provider LB that was configured for the k8s cluster
+# Without specifying a specific IP or NSX-T IP Pool, the LoadBalancer will use an IP from whatever default pool it has configured
+# The image is pulled directly from the internet from Dockerhub, so this requires that the cluster has direct internet connectivity
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment-public-image-with-loadbalancer 
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1  
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: lb-example-deployment-public-image-with-loadbalancer
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
