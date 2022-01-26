@@ -6,7 +6,7 @@ Welcome to the ITQ Tanzu Kubernetes Grid Demo Repository
 
 Our mission at ITQ is enabling our customers to accelerate their business with agile IT using innovative VMware technology and a passion for IT.
 
-We’re passionate about Cloud-Native applications (apps) and the difference they can make to a client’s business. We’ll help create infrastructure that lets your developers and IT build, run and manage Cloud-Native apps with ease. A way of working that increases security, efficiency and accelerates business innovation.
+We’re passionate about Cloud-Native applications (apps) and the difference they can make to a client’s business. We’ll help create infrastructure that lets your developers and IT build, run and manage Cloud-Native apps with ease. That is a way of working that increases security, efficiency and accelerates business innovation.
 
 For more information, please visit: https://itq.eu/technology/cloud-native-applications/
 
