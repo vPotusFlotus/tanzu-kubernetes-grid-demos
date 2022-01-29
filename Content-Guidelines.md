@@ -1,6 +1,30 @@
 # Naming Guidelines
 
 
+## Customer Information
+
+Under no circumstances should customer specific data end up in this repo. Any URLs, server names, IP addresses, etc should be made generic before that code is added to this repo. 
+
+
+## Passwords, Secrets, Certificates and other Key Material
+
+Under no circumstances should customer secrets end up in this repo. 
+ If you develop a demonistration during a customer engagement, and copy paste it for use here, scrub any and all secrets from the example or replace it with placeholders that are clearly commented as such
+
+
+## Home-lab specific information
+
+If you are adding examples of anything that contains URLS, IP's, ranges, secrets etc from your own home-lab, you do so under your own responsibilty. Otherwise make the example generic according to the guidelines at the bottom section of this document. 
+
+Make sure you mark such values or explain where these values come from in comments, or an added Readme.md file
+
+
+## Use folders and Make Readme.md files to explain what you have added
+
+Its just common curtesy to explain your example or demo
+If you add a folder with many config file examples, explain generally what its for and where its to be used. 
+
+
 ## Server Names
 
 Many of our examples will be scripts or commands run from a jumpbox. 
@@ -16,9 +40,6 @@ Keep servernames or service names as generic as possible
 Examples
 
 harborpoc (harborpoc.customerdomain.local)
-
-
-
 
 
 ## IP Addresses

@@ -21,3 +21,7 @@ It contains sample applications, code demonstrations, config examples and accomp
 # Guidelines and Rules of Conduct
 
 Please refer to https://github.com/orangeglasses/tanzu-kubernetes-grid-demos/blob/main/Content-Guidelines.md for naming conventions
+
+# Contributing Code
+
+Please see the [Contributing](https://github.com/orangeglasses/tanzu-kubernetes-grid-demos/blob/main/Contributing.md) page. 
