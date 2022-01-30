@@ -1,0 +1,20 @@
+# Example nginx deployment with a service of type LB, and a PVC
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubernetes-example-nginx-test
+  labels:
+    name: kubernetes-example-nginx-test
+spec:
+  containers:
+    - image: registry.kubernetes.mycompany.nl/library/nginx-test:v1 #example image on private registry
+      name: image-kubernetes-example-nginx-test
+      volumeMounts:
+        - name: kubernetes-example-nginx-test-webcontent
+          mountPath: /usr/share/nginx/html
+#  imagePullSecrets:
+#  - name: harborcred-tazupoc-robot #the name of the specific secret we made for the harbor robot account log in
+  volumes:
+    - name: kubernetes-example-nginx-test-webcontent
+      persistentVolumeClaim:
+        claimName: pvc-kubernetes-example-nginx-test-webcontent

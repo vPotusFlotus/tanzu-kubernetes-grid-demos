@@ -1,0 +1,21 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mynginx-ingress
+spec:
+  tls:
+  - hosts:
+    - mynginx.apps.kubernetes.mycompany.nl
+  rules:
+  - host: mynginx.apps.kubernetes.mycompany.nl
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: mynginx-clusterip
+            port:
+              number: 80
+

@@ -1,0 +1,4 @@
+# creates a docker image with custom content in /usr/share/nginx/html
+# If you mount a volume to the same location, this will be overwridden. 
+FROM registry.kubernetes.mycompany.nl/library/nginx:latest
+COPY static-html-directory /usr/share/nginx/html
