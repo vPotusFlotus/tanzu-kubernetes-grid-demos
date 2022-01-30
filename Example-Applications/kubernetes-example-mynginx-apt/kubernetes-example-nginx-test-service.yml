@@ -1,0 +1,14 @@
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: lb-kubernetes-example-nginx-test
+spec:
+  selector:
+    name: kubernetes-example-nginx-test
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 80
+  type: LoadBalancer

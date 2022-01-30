@@ -1,0 +1,12 @@
+---
+# Request a persistent volume from the cluster using a Persistent Volume Claim.
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-kubernetes-example-nginx-test-webcontent
+  annotations:
+spec:
+  accessModes: [ReadWriteOnce] #can only be used by a single pod at a time
+  resources:
+    requests:
+      storage: 5Gi
