@@ -17,7 +17,18 @@ This page is to record and explan currentl issues and limitations with the TKG p
 
 Core documentation Workload Enablement walkthrough is outdated
 
-CSI LB service is undocumented in either TKGs or CSI docs. 
+
+## vSphere Services
+
+The 'vSphere Services' section (the 'services' tab) under Workload Management, seems extremely underdeveloped. The links point to a [Github documentation page](https://github.com/vsphere-tmm/Supervisor-Services), which in turn links directly to [Jfrog artifactory](https://vmwaresaas.jfrog.io/ui/repos/tree/General) for direct download of service defintions (this should be in Partner Connect Downloads or TanzuNet), and the entire thing seems to be maintained by just 1 or 2 guys. What little documentation there is, seems to be written by the same guys: https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-A0A5F6D4-87A4-46CA-A50A-33664F43F299.html#GUID-A0A5F6D4-87A4-46CA-A50A-33664F43F299
+That this part shipped in this state is unbelievable. 
+
+
+## CSI Issies
+
+The CSI seems to create a LB service. (where before it was internal cluster-ip) This is undocumented in either TKGs or CSI docs. 
+
+CSI driver inside TKGs clusters, create a LB entry specifically for the CSI. This is undocumented. The ports it expects on the Master nodes is also not enabled by default, so this VS turns up and remains RED in the Avi overview. 
 
 
 ## NSX ALB (Avi) Integration
@@ -25,5 +36,5 @@ CSI LB service is undocumented in either TKGs or CSI docs.
 Workload Enablement wizard does not allow selection of any other NSX ALB 'cloud'. It can only use the 'default' cloud in Avi.  This is a serious limitation in any case that more than 1 'cloud' defintition are required on the AVI side. For example seperate SE groups using seperate networks. 
 TO CHECK: Can TKGs cluster defintions override 'default' cloud for the AKO config? 
 
-CSI driver inside TKGs clusters, create a LB entry specifically for the CSI. This is undocumented. The ports it exects on the Master nodes is also not enabled by default, so this VS turns up and remains RED in the Avi overview. 
+
 
