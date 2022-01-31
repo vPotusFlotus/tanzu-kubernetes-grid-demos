@@ -73,21 +73,44 @@ Bound developers authenticate with Tanzu Kubernetes clusters using the vSphere P
 vSphere Plugin for kubectl automatically provisions their Kubectl config with the appropriate access tokens for the clusters they have rights in. 
 
 
+
+# Kubectl and kubectl-vsphere
+
+
+## Version of kubectl
+
+The version of Kubectl that you download from the supervisor cluster tools page, is a specific version of kubectl, that contains TKGs (wpc) specific extentions. 
+
+Example:
+```
+./kubectl version
+Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.0+vmware.wcp.2", GitCommit:"d5bb17833505d15ce5f40815bb14fede978fe8c1", GitTreeState:"clean", BuildDate:"2021-08-14T16:46:51Z", GoVersion:"go1.16.1", Compiler:"gc", Platform:"linux/amd64"}
+```
+
+You cannot rename the binary, unfortunately, as this will cause the hook between kubectl and kubectl-vsphere to fail. 
+
+
+
 # vSphere Namespace Roles
 
 Possible Namespace Rights:
 
-## View  
+## Can View  
 
 (does this automaticlaly bind the 'view' clusterrole? )
 
 
-## Edit
+## Can Edit
 
 
 Edit permissions on the namespace will automatically grand Kubernetes cluster-admin role in any clusters that are created under that namespace
  
 Anyone with Edit permission on the Namespace, has cluster-admin access to ANY k8s cluster made IN that namespace
+
+## Owner
+
+
+
 
 ## No role on the namespace (in vSphere)
 
@@ -294,14 +317,7 @@ v1.20.2---vmware.1-tkg.1.1d4f79a    1.20.2+vmware.1-tkg.1.1d4f79a    True    Tru
 we will update our example cluster from 1.18.5 to 1.19.7
 
 ```
- read -r -d '' PATCH <<'EOF'
-                                                                                 spec:
-                                                                                   distribution:
-                                                                                     fullVersion: null    # NOTE: Must set to null when updating just the version field
-                                                                                     version: v1.19.7
-                                                                                 EOF
-echo $PATCH
-spec: distribution: fullVersion: null # NOTE: Must set to null when updating just the version field version: v1.19.7
+place patching code here
 ```
 
 ```
@@ -629,6 +645,50 @@ vmware-system-user@tkgs-infra-services-workers-zfxbr-7c488875f7-2smph [ ~ ]$
 
 ```
 
+# Certificates and CA Trust
+
+## Command Line Tools
+
+Anywhere you interact with the Supervisor Cluster or Tanzu Kubernetes Clusters, you need to have the vCenter CA cert trusted locally. 
+
+https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-BF21BE11-3965-42E9-BBED-B6B784D97345.html
+
+Regardless of if the vCenter certs are self-signed or not, you can trust the cert. 
+
+For customer deployment, the recommendation would be to have the vCenter server be signed by a corperate CA root, and have any jumbox already trust that root CA. 
+
+
+VMware supplies instructions for this for Windows: https://kb.vmware.com/s/article/2108294
+
+For Linux, follow the following example: 
+
+Display the vCenter Certificate in PEM format:
+```
+echo -n | openssl s_client -connect fluffnuccenter.flufflap.local:443 \
+    | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p'
+```
+
+Same this to a file, like vcenter-ca.crt
+
+Then, assuming Ubuntu, we follow the steps here: https://ubuntu.com/server/docs/security-trust-store
+
+```
+sudo cp vcenter-ca.crt /usr/local/share/ca-certificates
+sudo update-ca-certificates
+```
+
+Repeat the above steps, for the Supervisor Cluster API
+
+you can check if it works by running wget against both the vcenter, and supervisor cluster URLs. If they download index.html without an error, then you know both certs are trusted by the local OS
+
+
+
+
+
+
+
+
+
 
 # TKGs Extentions vs TKGm Packages
 
@@ -637,3 +697,53 @@ TKGs 'Extentions' TKG 1.3 and prior) are to be considdered deprecated and not to
 Instead use TKG Packages that use the new Carvel kapp-controller. 
 
 For more information, and for TKGs specific regarding this, see seperate document [TKGs-using-TKG-packages.md](TKGs-using-TKG-packages.md)
+
+
+# Buildup Steps (simplified)
+
+
+## Prereqs
+
+* Set NSX ALB Auth to support basic
+* Create local vSphere accounts (or AD if preferred)
+  * Dedicated account for AVI to use to log into vCenter
+  * Deciated account for DevOps engineer to administer Namespace1 and the services cluster
+
+
+## Workload Management Enablement
+
+* Configure a Cluster for Workload Management
+* Set correct License on Supervisor CLuster
+* (Optional) Add TMC URL to Supervisor Cluster
+* Create a namespace
+  * Associate a content Library with the VM Service
+  * Associate VM classes with the VM Service  
+  * Add Permissions to the namespace
+  * Add a Storage Class to the namespace
+* Download Tools
+  * wget --show-progress https://<supervisorclusterIP>/wcp/plugin/linux-amd64/vsphere-plugin.zip --no-check-certificate
+  * unzip vsphere-plugin.zip
+  * (optional) Considder rename of kubectl in case it might conflict with other versions
+  * sudo mv ./bin/* /usr/local/bin
+* Install the vCenter and Supervisor Cluster Certs if needed (for local OS trust)
+
+## Create First Example Cluster
+* Login to supervisor cluster
+* Change kubectl context to the namespace for the services cluster
+* Deploy example cluster using definition examples
+
+## Login and Run test workload in Example cluster
+* Change context to example cluster
+* 
+
+
+
+
+# Jumpbox Requirements
+
+
+Ubuntu
+sudo apt-get install unzip
+sudo apt-get install -y ca-certificates
+
+
