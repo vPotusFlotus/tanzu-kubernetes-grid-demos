@@ -18,6 +18,17 @@ This page is to record and explan currentl issues and limitations with the TKG p
 Core documentation Workload Enablement walkthrough is outdated
 
 
+## Networking
+
+After Workload Enablement, additional workload netwoks can only be added if the Management network uses STATIC networking. 
+https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-1E7B905B-2D3E-4E60-9F37-8C0C3D8F7771.html
+For all practical purposes, this means you must always configure management network with static IPs
+
+
+## vSphere Namespaces
+
+
+
 ## vSphere Services
 
 The 'vSphere Services' section (the 'services' tab) under Workload Management, seems extremely underdeveloped. The links point to a [Github documentation page](https://github.com/vsphere-tmm/Supervisor-Services), which in turn links directly to [Jfrog artifactory](https://vmwaresaas.jfrog.io/ui/repos/tree/General) for direct download of service defintions (this should be in Partner Connect Downloads or TanzuNet), and the entire thing seems to be maintained by just 1 or 2 guys. What little documentation there is, seems to be written by the same guys: https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-A0A5F6D4-87A4-46CA-A50A-33664F43F299.html#GUID-A0A5F6D4-87A4-46CA-A50A-33664F43F299
