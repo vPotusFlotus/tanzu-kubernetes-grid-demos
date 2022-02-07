@@ -35,7 +35,7 @@ The 'vSphere Services' section (the 'services' tab) under Workload Management, s
 That this part shipped in this state is unbelievable. 
 
 
-## CSI Issies
+## CSI Issues
 
 The CSI seems to create a LB service. (where before it was internal cluster-ip) This is undocumented in either TKGs or CSI docs. 
 
@@ -44,8 +44,20 @@ CSI driver inside TKGs clusters, create a LB entry specifically for the CSI. Thi
 
 ## NSX ALB (Avi) Integration
 
+### TKGs Limited to 'Default Cloud'
 Workload Enablement wizard does not allow selection of any other NSX ALB 'cloud'. It can only use the 'default' cloud in Avi.  This is a serious limitation in any case that more than 1 'cloud' defintition are required on the AVI side. For example seperate SE groups using seperate networks. 
 TO CHECK: Can TKGs cluster defintions override 'default' cloud for the AKO config? 
 
+### TKGs Relies on 'Basic Authentication'
+At some point in 2021, NSX ALB stopped supported Basic Auth as a method to authenticate against the API. However TKGs (as of feb 2022) still requires this.
+Workaround procedure is documented here: https://vraccoon.com/2021/10/the-control-plane-vm-was-unable-to-authenticate-to-the-load-balancer-avi/![image](https://user-images.githubusercontent.com/29251599/152826504-378a52ab-e122-4e95-bf35-d50a9889e133.png)
+The procedure to set this is not documented anywhere in VMware docs. 
 
-
+Procedure:
+* SSH into NSX ALB Controller
+* Start the shell `shell --user admin`
+* Move to systemconfiguration `configure systemconfiguration`
+* Move to portalconfiguration `portal_configuration`
+* Note Line 27
+* Change value by typing `allow_basic_authentication`
+* Exit Out
