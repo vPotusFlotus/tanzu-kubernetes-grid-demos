@@ -18,6 +18,12 @@ This page is to record and explan currentl issues and limitations with the TKG p
 Core documentation Workload Enablement walkthrough is outdated
 
 
+## Interaction with vSphere and ESX hosts
+
+DRS Must remain on at all times after workload enablement. (but you can set to manual if needed). Disabling DRS leads to breaking your Tanzu Kubernetes clusters.
+https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-8D7D292B-43E9-4CB8-9E20-E4039B80BF9B.html
+
+
 ## Networking
 
 After Workload Enablement, additional workload netwoks can only be added if the Management network uses STATIC networking. 
@@ -35,7 +41,7 @@ The 'vSphere Services' section (the 'services' tab) under Workload Management, s
 That this part shipped in this state is unbelievable. 
 
 
-## CSI Issies
+## CSI Issues
 
 The CSI seems to create a LB service. (where before it was internal cluster-ip) This is undocumented in either TKGs or CSI docs. 
 
