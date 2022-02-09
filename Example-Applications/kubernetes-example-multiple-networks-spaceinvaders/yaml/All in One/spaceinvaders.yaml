@@ -1,0 +1,137 @@
+#Step 1: AviInfraSettings
+apiVersion: ako.vmware.com/v1alpha1
+kind: AviInfraSetting
+metadata:
+  name: dmz-infra-setting
+spec:
+  seGroup:
+    name: Default-Group #Make sure this matches your Service Engine Group that you've configured in Avi!
+  network:
+    vipNetworks:
+      - networkName: "Example Network" #Add your Network Name here
+        cidr: 10.10.60.0/24 #Add your CIDR here
+    enableRhi: false
+  l7Settings:
+    shardSize: MEDIUM
+---
+#Step 1: AviInfraSettings
+apiVersion: ako.vmware.com/v1alpha1
+kind: AviInfraSetting
+metadata:
+  name: prod-infra-setting
+spec:
+  seGroup:
+    name: Default-Group #Make sure this matches your Service Engine Group that you've configured in Avi!
+  network:
+    vipNetworks:
+      - networkName: "Example Network" #Add your Network Name here
+        cidr: 10.10.70.0/24 #Add your CIDR here
+    enableRhi: false
+  l7Settings:
+    shardSize: MEDIUM
+---
+#Step 2: IngressClass
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: dmz-avi-ingress-class
+spec:
+  controller: ako.vmware.com/avi-lb
+  parameters:
+    apiGroup: ako.vmware.com
+    kind: AviInfraSetting
+    name: dmz-infra-setting #Refer to your AviInfraSetting Object here
+---
+#Step 2: IngressClass
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: prod-avi-ingress-class
+spec:
+  controller: ako.vmware.com/avi-lb
+  parameters:
+    apiGroup: ako.vmware.com
+    kind: AviInfraSetting
+    name: prod-infra-setting #Refer to your AviInfraSetting Object here
+---
+#Step 3: SpaceInvaders Application
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: spaceinvaders
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: spaceinvaders
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: spaceinvaders
+    spec:
+      containers:
+      - name: spaceinvaders
+        image: vpotusflotus/demos:spaceinvadershtml5
+        ports:
+        - containerPort: 80
+---
+#Step 4: ClusterIP Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: spaceinvaders-clusterip
+  namespace: default
+  labels:
+    app: spaceinvaders-clusterip
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 80
+  selector:
+    app: spaceinvaders
+  type: ClusterIP
+---
+#Step 5: Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spaceinvaders-ingress
+  labels:
+    app: spaceinvaders-ingress
+spec:
+  ingressClassName: dmz-avi-ingress-class 
+  rules:
+  - host: hostname-dmz.avi.example.local #Make sure to modify your hostname here
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: spaceinvaders-clusterip
+            port:
+              number: 8080
+---
+#Step 5: Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spaceinvaders-ingress-prod
+  labels:
+    app: spaceinvaders-ingress
+spec:
+  ingressClassName: prod-avi-ingress-class 
+  rules:
+  - host: hostname-prod.avi.example.local #Make sure to modify your hostname here
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: spaceinvaders-clusterip
+            port:
+              number: 8080

@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spaceinvaders-ingress
+  labels:
+    app: spaceinvaders-ingress
+spec:
+  ingressClassName: dmz-avi-ingress-class 
+  rules:
+  - host: hostname-dmz.avi.example.local #Make sure to modify your hostname here
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: spaceinvaders-clusterip
+            port:
+              number: 8080

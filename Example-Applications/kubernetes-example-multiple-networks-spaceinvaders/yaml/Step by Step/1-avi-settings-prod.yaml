@@ -1,0 +1,14 @@
+apiVersion: ako.vmware.com/v1alpha1
+kind: AviInfraSetting
+metadata:
+  name: prod-infra-setting
+spec:
+  seGroup:
+    name: Default-Group #Make sure this matches your Service Engine Group that you've configured in Avi!
+  network:
+    vipNetworks:
+      - networkName: "Example Network" #Add your Network Name here
+        cidr: 10.10.70.0/24 #Add your CIDR here
+    enableRhi: false
+  l7Settings:
+    shardSize: MEDIUM
