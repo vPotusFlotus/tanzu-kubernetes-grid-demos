@@ -12,10 +12,10 @@ This example can also be used to expose different applications in separate netwo
 
 ## Remarks
 For the sake of this Demo I have added everything in separate YAML files so it's easier to track in the steps explained below.
-These 'Steb by Step' YAML files can be found in this Repo under [yaml/Step by Step](/yaml/Step%20by%20Step). 
+These 'Step by Step' YAML files can be found in this Repo under [yaml/Step by Step](/yaml/step-by-step). 
 
 However everything can definitely be combined in 1 YAML file using '---' as separator. If you would like to use this 'All in One' file, 
-be sure to check it out under [yaml/All in One](yaml/All%20in%20One). 
+be sure to check it out under [yaml/All in One](yaml/all-in-one). 
 
 ## What do we need? 
 1. A working TKGs Workload / Guest Cluster
