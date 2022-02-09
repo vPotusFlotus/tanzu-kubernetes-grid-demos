@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: ingress
 spec:
+  #ingressClassName: some-ingress-class  #(Optional: specify your IngressClass Name here)
   rules:
     - host: ingress-example.example.local #Change to match your hostname
       http:
