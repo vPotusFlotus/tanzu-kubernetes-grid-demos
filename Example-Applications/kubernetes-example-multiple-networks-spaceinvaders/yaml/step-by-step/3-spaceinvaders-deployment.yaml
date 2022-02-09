@@ -1,0 +1,21 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: spaceinvaders
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: spaceinvaders
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: spaceinvaders
+    spec:
+      containers:
+      - name: spaceinvaders
+        image: vpotusflotus/demos:spaceinvadershtml5
+        ports:
+        - containerPort: 80
