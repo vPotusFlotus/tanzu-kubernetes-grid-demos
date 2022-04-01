@@ -67,3 +67,78 @@ Procedure:
 * Note Line 27
 * Change value by typing `allow_basic_authentication`
 * Exit Out
+
+# TKGm (Tanzu Kubernetes Grid)
+
+
+## Dex
+
+Dex self-signed certificates expire by default after 90 days. 
+This is not documented. 
+If certificates are not rolled over within 90 days, Pinniped will not be able to run LDAP autnentication against Dex, and Logins will fail. 
+This results in an error (in the browser) 'no upstream providers configured'
+
+Workarounds: 
+
+Set up Dex to use custom cert that has a longer lifespan. 
+Or just have Dex roleover its cert (so its valid for another 90 days. Both procedures are documented here: 
+https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-iam-custom-pinniped-certificates.html#update-dex-serving-certificate-and-dex-ca-certificate-3
+
+```
+Issue: No upstream Providers Configured error was thrown in the Browser when customer tried to login to LDAP
+Workaround/Resolution Commands 
+- kubectl config use-context management-context
+- kubectl get certificate dex-cert -n tanzu-system-auth
+- kubectl edit certificate dex-cert -n tanzu-system-auth
+under dex:
+certificate:
+duration: 87600h0m0s. //modify the duration for 10 years or less than that as per requirement
+
+- kubectl get secrets -n tanzu-system-auth
+- kubectl delete secret dex-cert-tls -n tanzu-system-auth
+- kubectl rollout restart deployment/dex -n tanzu-system-auth
+
+```
+
+## Pinniped
+
+### Spontanious Failure to update workload cluster secrets with new certificate information
+
+Cause currently not well understood. VMware plans to fix in future TKGm version. 
+
+This is documented here: 
+https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-troubleshooting-tkg-tips.html#pinniped-authentication-error-on-workload-cluster-after-management-cluster-upgrade-17
+The workaround is also documented on the same page: https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-troubleshooting-tkg-tips.html#postdeploy-pinniped-job-fails-16
+
+Example of workaround procedure: 
+
+```
+Issue2:  could not complete concierge credential exchange: login failed While trying to run commands from console
+Resolution Commands 
+1- To check certificates being used by pinniped-supervisor service 
+- openssl s_client -showcerts -servername 172.2.50.21 -connect 172.2.50.21:31234
+2- Capture/Copy CA Certificate being used and paste output in a file named ca-openssl.cert
+vim ca-openssl.cert
+cat ca-openssl.cert | base64 -w0 ---> To encrypt CA certificate 
+3- Switch context to management cluster 
+kubectl config use-context <management-cluster-name>-admin@<management-cluster-name>
+4- Get pinniped-addon secret for workload cluster 
+kubectl get secret <workload-cluster-name>-pinniped-addon -oyaml
+5- Decrypt encrypted file values.yaml 
+echo "<Values.yaml>" | base64 -d > values.yaml
+6- Edit in decrypted file values.yaml in part pinniped-supervisor_ca_bundle_data and paste encypted value of ca-openssl.cert file 
+vim values.yaml ---> Save after pasting the value of encrypted CA bundle data 
+7- Encrypt the file values.yaml back again to add the corrected value in workload pinniped-addon secret 
+cat values.yaml | base64 -w0
+8- Edit in the pinniped-addon secret for workload cluster 
+kubectl edit secret <workload-cluster-name>-pinniped-addon 
+9- Switch back to workload cluster to delete post-deploy-job in pinniped-supervisor namespace 
+kubectl config use-context <workload-cluster-name>-admin@<workload-cluster-name>
+10- Delete the post-deploy-job 
+kubectl get jobs -A
+kubectl delete job  pinniped-post-deploy-job -n pinniped-supervisor 
+11- Ensure that correct ca bundle is being used in newly deployed post-deployed-job that was automatically created after deletion 
+kubectl get job pinniped-post-deploy-job -n pinniped-supervisor -oyaml
+12- Try to test login again and it will work successfully 
+```
+
