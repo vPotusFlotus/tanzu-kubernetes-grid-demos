@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spaceinvaders
-        image: vpotusflotus/demos:spaceinvadershtml5
+        image: vpotusflotus/spaceinvaders-demo:latest
         ports:
-        - containerPort: 80
+        - containerPort: 8080
