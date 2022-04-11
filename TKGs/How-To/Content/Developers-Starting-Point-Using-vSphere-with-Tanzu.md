@@ -9,13 +9,13 @@ Once you have recieved those details mentioned above, you can start using the vS
 
 A good **starting point** can be:
 
-1. [Install Kubernetes CLI Tools for vSphere](Content/Install-Kubernetes-CLI-Tools-for-vSphere.md)
-1. [How to Login?](Content/How-to-Login.md) 
-1. [How to Create a Tanzu Kubernetes Cluster?](Content/How-to-Create-a-Tanzu-Kubernetes-Cluster.md)
-1. [How to Delete a Tanzu Kubernetes Cluster?](Content/How-to-Delete-a-Tanzu-Kubernetes-Cluster.md)
-1. [How to Scale an existing Tanzu Kubernetes Cluster?](Content/How-to-Scale-an-existing-Tanzu-Kubernetes-Cluster.md)
-1. [How to Upgrade a Tanzu Kubernetes Cluster?](Content/How-to-Upgrade-a-Tanzu-Kubernetes-Cluster.md)
-1. [How to Apply a Pod Security Policy on a Tanzu Kubernetes Cluster?](Content/How-to-Apply-a-Pod-Security-Policy-on-a-Tanzu-Kubernetes-Cluster.md)
-1. [How to create an L4 Load Balancer with NSX-ALB (Avi)?](Content/How-to-create-an-L4-Load-Balancer-with-Avi.md) 
-1. [How to use NSX-ALB (Avi) as an L7 Ingress Controller?](Content/How-to-use-NSX-ALB-(Avi)-as-an-L7-Ingress-Controller.md)
-1. [How to integrate your own Container Registry?](Content/How-to-integrate-your-own-Container-Registry.md)
+1. [Install Kubernetes CLI Tools for vSphere](Install-Kubernetes-CLI-Tools-for-vSphere.md)
+1. [How to Login?](How-to-Login.md) 
+1. [How to Create a Tanzu Kubernetes Cluster?](How-to-Create-a-Tanzu-Kubernetes-Cluster.md)
+1. [How to Delete a Tanzu Kubernetes Cluster?](How-to-Delete-a-Tanzu-Kubernetes-Cluster.md)
+1. [How to Scale an existing Tanzu Kubernetes Cluster?](How-to-Scale-an-existing-Tanzu-Kubernetes-Cluster.md)
+1. [How to Upgrade a Tanzu Kubernetes Cluster?](How-to-Upgrade-a-Tanzu-Kubernetes-Cluster.md)
+1. [How to Apply a Pod Security Policy on a Tanzu Kubernetes Cluster?](How-to-Apply-a-Pod-Security-Policy-on-a-Tanzu-Kubernetes-Cluster.md)
+1. [How to create an L4 Load Balancer with NSX-ALB (Avi)?](How-to-create-an-L4-Load-Balancer-with-Avi.md) 
+1. [How to use NSX-ALB (Avi) as an L7 Ingress Controller?](How-to-use-NSX-ALB-(Avi)-as-an-L7-Ingress-Controller.md)
+1. [How to integrate your own Container Registry?](How-to-integrate-your-own-Container-Registry.md)
