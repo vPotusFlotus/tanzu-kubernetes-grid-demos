@@ -3,7 +3,7 @@
 Once a vSphere Administrator has created a vSphere Namespace for you and your team, you should at least recieve the following details:
 * The Supervisor **Control Plane IP Address** & Website Link to download the Kubernetes CLI Tools for vSphere
 * The **Storage Policies** used for Persistent Volumes and Tanzu Kubernetes Cluster Nodes
-
+* The **Name** of the **vSphere Namespace** to use
 
 Once you have recieved those details mentioned above, you can start using the vSphere Namespace and deploy Tanzu Kubernetes Clusters for your Workloads.
 

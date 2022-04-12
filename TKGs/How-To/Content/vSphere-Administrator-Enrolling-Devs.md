@@ -12,6 +12,7 @@ As a **vSphere Administrator you need to minimally do** the following:
 1. **Assign the necessary permissions** to your Developers. Ideally at least **'Edit' or 'Owner'** Permissions so that your Devs can create TKCs themselves. Permissions are explained on our github [here](../../TKGs-basic-usage-examples.md#vsphere-namespace-roles). 
 
 **Provide your Devs** with the **following** Details:
+* The **Name** of the **vSphere Namespace** to use
 * The Supervisor **Control Plane IP Address** & Website Link to download the Kubernetes CLI Tools for vSphere
 * The **Storage Policies** used for Persistent Volumes and Tanzu Kubernetes Cluster Nodes
 * [Install Kubernetes CLI Tools for vSphere](Install-Kubernetes-CLI-Tools-for-vSphere.md)
