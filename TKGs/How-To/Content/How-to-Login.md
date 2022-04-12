@@ -72,7 +72,7 @@ kubectl vsphere login --server=10.10.70.11 --vsphere-username=administrator@vsph
 In order to authenticate in a certain vSphere Namespace, just provide the option '--tanzu-kubernetes-cluster-namespace' to your login command as shown below. 
 
 ```
-kubectl vsphere login --server=<KUBERNETES-CONTROL-PLANE-IP-ADDRESS> --vsphere-username <VCENTER-SSO-USER> --tanzu-kubernetes-cluster-namespace --tanzu-kubernetes-cluster-namespace=<NAMESPACE>
+kubectl vsphere login --server=<KUBERNETES-CONTROL-PLANE-IP-ADDRESS> --vsphere-username <VCENTER-SSO-USER> --tanzu-kubernetes-cluster-namespace=<NAMESPACE>
 ```
 
 Example:
