@@ -80,7 +80,27 @@ kubectl get sc
 
 NAME                PROVISIONER              RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
 tkg-storagepolicy   csi.vsphere.vmware.com   Delete          Immediate           true                   9d
+
+OR
+kubectl describe ns <NAMESPACE-NAME>
+
+Name:         dev
+Labels:       kubernetes.io/metadata.name=dev
+              vSphereClusterID=domain-c8
+Annotations:  vmware-system-resource-pool: resgroup-6051
+              vmware-system-vm-folder: group-v6052
+Status:       Active
+
+Resource Quotas
+  Name:                                                           dev-storagequota
+  Resource                                                        Used  Hard
+  --------                                                        ---   ---
+  tkg-storagepolicy.storageclass.storage.k8s.io/requests.storage  0     9223372036854775807
+
+No LimitRange resource.
 ````
+In the output of the 'kubectl describe ns' command, you can find the StorageClass under the "Resource Quotas" section:
+- tkg-storagepolicy.storageclass.storage.k8s.io (the name of your StorageClass is the text coming before ".storageclass" so in this case: tkg-storagepolicy)
 
 OR you could check the VM Storage Policy configured for that vSphere Namespace in vCenter:
 
@@ -92,7 +112,50 @@ This means:
 * Storage-Policy-1 becomes 'storage-policy-1' as a name for the StorageClass
 * Storage Policy 2 becomes 'storage-policy-2' as a name for the StorageClass
 
+## List the possible Tanzu Kubernetes Releases
 
+
+Let's show all the Tanzu Kubernetes Releases available in our vSphere with Tanzu environment:
+
+````
+kubectl get tanzukubernetesreleases
+
+OR
+
+kubectl get tkr
+
+NAME                                VERSION                          READY   COMPATIBLE   CREATED   UPDATES AVAILABLE
+v1.16.12---vmware.1-tkg.1.da7afe7   1.16.12+vmware.1-tkg.1.da7afe7   True    True         10d       [1.17.17+vmware.1-tkg.1.d44d45a 1.16.14+vmware.1-tkg.1.ada4837]
+v1.16.14---vmware.1-tkg.1.ada4837   1.16.14+vmware.1-tkg.1.ada4837   True    True         10d       [1.17.17+vmware.1-tkg.1.d44d45a]
+v1.16.8---vmware.1-tkg.3.60d2ffd    1.16.8+vmware.1-tkg.3.60d2ffd    False   False        10d       [1.17.17+vmware.1-tkg.1.d44d45a 1.16.14+vmware.1-tkg.1.ada4837]
+v1.17.11---vmware.1-tkg.1.15f1e18   1.17.11+vmware.1-tkg.1.15f1e18   True    True         10d       [1.18.19+vmware.1-tkg.1.17af790 1.17.17+vmware.1-tkg.1.d44d45a]
+v1.17.11---vmware.1-tkg.2.ad3d374   1.17.11+vmware.1-tkg.2.ad3d374   True    True         10d       [1.18.19+vmware.1-tkg.1.17af790 1.17.17+vmware.1-tkg.1.d44d45a]
+v1.17.13---vmware.1-tkg.2.2c133ed   1.17.13+vmware.1-tkg.2.2c133ed   True    True         10d       [1.18.19+vmware.1-tkg.1.17af790 1.17.17+vmware.1-tkg.1.d44d45a]
+v1.17.17---vmware.1-tkg.1.d44d45a   1.17.17+vmware.1-tkg.1.d44d45a   True    True         10d       [1.18.19+vmware.1-tkg.1.17af790]
+v1.17.7---vmware.1-tkg.1.154236c    1.17.7+vmware.1-tkg.1.154236c    True    True         10d       [1.18.19+vmware.1-tkg.1.17af790 1.17.17+vmware.1-tkg.1.d44d45a]
+v1.17.8---vmware.1-tkg.1.5417466    1.17.8+vmware.1-tkg.1.5417466    True    True         10d       [1.18.19+vmware.1-tkg.1.17af790 1.17.17+vmware.1-tkg.1.d44d45a]
+v1.18.10---vmware.1-tkg.1.3a6cd48   1.18.10+vmware.1-tkg.1.3a6cd48   True    True         10d       [1.19.16+vmware.1-tkg.1.df910e2 1.18.19+vmware.1-tkg.1.17af790]
+v1.18.15---vmware.1-tkg.1.600e412   1.18.15+vmware.1-tkg.1.600e412   True    True         10d       [1.19.16+vmware.1-tkg.1.df910e2 1.18.19+vmware.1-tkg.1.17af790]
+v1.18.15---vmware.1-tkg.2.ebf6117   1.18.15+vmware.1-tkg.2.ebf6117   True    True         10d       [1.19.16+vmware.1-tkg.1.df910e2 1.18.19+vmware.1-tkg.1.17af790]
+v1.18.19---vmware.1-tkg.1.17af790   1.18.19+vmware.1-tkg.1.17af790   True    True         10d       [1.19.16+vmware.1-tkg.1.df910e2]
+v1.18.5---vmware.1-tkg.1.c40d30d    1.18.5+vmware.1-tkg.1.c40d30d    True    True         10d       [1.19.16+vmware.1-tkg.1.df910e2 1.18.19+vmware.1-tkg.1.17af790]
+v1.19.11---vmware.1-tkg.1.9d9b236   1.19.11+vmware.1-tkg.1.9d9b236   True    True         10d       [1.20.12+vmware.1-tkg.1.b9a42f3 1.19.16+vmware.1-tkg.1.df910e2]
+v1.19.14---vmware.1-tkg.1.8753786   1.19.14+vmware.1-tkg.1.8753786   True    True         10d       [1.20.12+vmware.1-tkg.1.b9a42f3 1.19.16+vmware.1-tkg.1.df910e2]
+v1.19.16---vmware.1-tkg.1.df910e2   1.19.16+vmware.1-tkg.1.df910e2   True    True         10d       [1.20.12+vmware.1-tkg.1.b9a42f3]
+v1.19.7---vmware.1-tkg.1.fc82c41    1.19.7+vmware.1-tkg.1.fc82c41    True    True         10d       [1.20.12+vmware.1-tkg.1.b9a42f3 1.19.16+vmware.1-tkg.1.df910e2]
+v1.19.7---vmware.1-tkg.2.f52f85a    1.19.7+vmware.1-tkg.2.f52f85a    True    True         10d       [1.20.12+vmware.1-tkg.1.b9a42f3 1.19.16+vmware.1-tkg.1.df910e2]
+v1.20.12---vmware.1-tkg.1.b9a42f3   1.20.12+vmware.1-tkg.1.b9a42f3   True    True         10d       [1.21.6+vmware.1-tkg.1.b3d708a]
+v1.20.2---vmware.1-tkg.1.1d4f79a    1.20.2+vmware.1-tkg.1.1d4f79a    True    True         10d       [1.21.6+vmware.1-tkg.1.b3d708a 1.20.12+vmware.1-tkg.1.b9a42f3]
+v1.20.2---vmware.1-tkg.2.3e10706    1.20.2+vmware.1-tkg.2.3e10706    True    True         10d       [1.21.6+vmware.1-tkg.1.b3d708a 1.20.12+vmware.1-tkg.1.b9a42f3]
+v1.20.7---vmware.1-tkg.1.7fb9067    1.20.7+vmware.1-tkg.1.7fb9067    True    True         10d       [1.21.6+vmware.1-tkg.1.b3d708a 1.20.12+vmware.1-tkg.1.b9a42f3]
+v1.20.8---vmware.1-tkg.2            1.20.8+vmware.1-tkg.2            True    True         10d       [1.21.6+vmware.1-tkg.1]
+v1.20.9---vmware.1-tkg.1.a4cee5b    1.20.9+vmware.1-tkg.1.a4cee5b    True    True         10d       [1.21.6+vmware.1-tkg.1.b3d708a 1.20.12+vmware.1-tkg.1.b9a42f3]
+v1.21.2---vmware.1-tkg.1.ee25d55    1.21.2+vmware.1-tkg.1.ee25d55    True    True         10d       [1.21.6+vmware.1-tkg.1.b3d708a]
+v1.21.6---vmware.1-tkg.1            1.21.6+vmware.1-tkg.1            True    True         10d       
+v1.21.6---vmware.1-tkg.1.b3d708a    1.21.6+vmware.1-tkg.1.b3d708a    True    True         10d    
+````
+
+In order to deploy a TKC on a specific version, you need to reference to a Tanzu Kubernetes Release in the Tanzu Kubernetes Cluster Specification below.
 ## Create a Tanzu Kubernetes Cluster Specification
 
 In order to crate a Tanzu Kubernetes Cluster, we need to tell vSphere with Tanzu how our cluster should look like. This can be achieved by creating a 'Cluster Specification' in YAML format. We will define the **Size (Virtual Machine Class), the TKG Version and the Storage** Class to use. 
