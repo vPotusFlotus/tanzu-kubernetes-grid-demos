@@ -12,15 +12,16 @@ As a **vSphere Administrator you need to minimally do** the following:
 1. **Assign the necessary permissions** to your Developers. Ideally at least **'Edit' or 'Owner'** Permissions so that your Devs can create TKCs themselves. Permissions are explained on our github [here](../../TKGs-basic-usage-examples.md#vsphere-namespace-roles). 
 
 **Provide your Devs** with the **following** Details:
+* The **Name** of the **vSphere Namespace** to use
 * The Supervisor **Control Plane IP Address** & Website Link to download the Kubernetes CLI Tools for vSphere
 * The **Storage Policies** used for Persistent Volumes and Tanzu Kubernetes Cluster Nodes
-* [Install Kubernetes CLI Tools for vSphere](Content/Install-Kubernetes-CLI-Tools-for-vSphere.md)
-* [How to Login?](Content/How-to-Login.md) 
-* [How to Create a Tanzu Kubernetes Cluster?](Content/How-to-Create-a-Tanzu-Kubernetes-Cluster.md)
-* [How to Delete a Tanzu Kubernetes Cluster?](Content/How-to-Delete-a-Tanzu-Kubernetes-Cluster.md)
-* [How to Scale an existing Tanzu Kubernetes Cluster?](Content/How-to-Scale-an-existing-Tanzu-Kubernetes-Cluster.md)
-* [How to Upgrade a Tanzu Kubernetes Cluster?](Content/How-to-Upgrade-a-Tanzu-Kubernetes-Cluster.md)
-* [How to Apply a Pod Security Policy on a Tanzu Kubernetes Cluster?](Content/How-to-Apply-a-Pod-Security-Policy-on-a-Tanzu-Kubernetes-Cluster.md)
-* [How to create an L4 Load Balancer with NSX-ALB (Avi)?](Content/How-to-create-an-L4-Load-Balancer-with-Avi.md) 
-* [How to use NSX-ALB (Avi) as an L7 Ingress Controller?](Content/How-to-use-NSX-ALB-(Avi)-as-an-L7-Ingress-Controller.md)
-* [How to integrate your own Container Registry?](Content/How-to-integrate-your-own-Container-Registry.md)
+* [Install Kubernetes CLI Tools for vSphere](Install-Kubernetes-CLI-Tools-for-vSphere.md)
+* [How to Login?](How-to-Login.md) 
+* [How to Create a Tanzu Kubernetes Cluster?](How-to-Create-a-Tanzu-Kubernetes-Cluster.md)
+* [How to Delete a Tanzu Kubernetes Cluster?](How-to-Delete-a-Tanzu-Kubernetes-Cluster.md)
+* [How to Scale an existing Tanzu Kubernetes Cluster?](How-to-Scale-an-existing-Tanzu-Kubernetes-Cluster.md)
+* [How to Upgrade a Tanzu Kubernetes Cluster?](How-to-Upgrade-a-Tanzu-Kubernetes-Cluster.md)
+* [How to Apply a Pod Security Policy on a Tanzu Kubernetes Cluster?](How-to-Apply-a-Pod-Security-Policy-on-a-Tanzu-Kubernetes-Cluster.md)
+* [How to create an L4 Load Balancer with NSX-ALB (Avi)?](How-to-create-an-L4-Load-Balancer-with-Avi.md) 
+* [How to use NSX-ALB (Avi) as an L7 Ingress Controller?](How-to-use-NSX-ALB-(Avi)-as-an-L7-Ingress-Controller.md)
+* [How to integrate your own Container Registry?](How-to-integrate-your-own-Container-Registry.md)

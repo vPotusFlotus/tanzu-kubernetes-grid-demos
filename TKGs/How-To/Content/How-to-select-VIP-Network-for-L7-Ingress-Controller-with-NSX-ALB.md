@@ -7,8 +7,8 @@ We will be using NSX-ALB (Avi) as an L7 Ingress Controller leveraging the Ingres
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
 1. [Deploy Application](#deploy-application)
-1. How does this look in NSX-ALB
-1. Limitations
+1. [How does this look in NSX-ALB](#how-does-this-look-in-nsx-alb)
+1. [Limitations](#limitations)
 
 ## Prerequisites
 * Make sure you have deployed **vSphere with Tanzu with the Avi Integration**
