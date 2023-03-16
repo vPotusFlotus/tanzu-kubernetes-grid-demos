@@ -75,7 +75,7 @@ spec:
       - name: spaceinvaders
         image: vpotusflotus/demos:spaceinvadershtml5
         ports:
-        - containerPort: 80
+        - containerPort: 8080
 ---
 #Step 4: ClusterIP Service
 apiVersion: v1
@@ -89,7 +89,7 @@ spec:
   ports:
   - name: http
     port: 8080
-    targetPort: 80
+    targetPort: 8080
   selector:
     app: spaceinvaders
   type: ClusterIP
