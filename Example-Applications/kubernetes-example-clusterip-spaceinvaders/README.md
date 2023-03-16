@@ -1,7 +1,7 @@
 # ClusterIP Service Example
 
 This Example will deploy the SpaceInvaders Application on an HTML 5 Website based on NGINX. 
-The Application will be exposed internally a service of type ClusterIP. 
+The Application will be exposed internally as a service of type ClusterIP. 
 Later you can expose this ClusterIP Service with an Ingress for example.
 
 Let's get started!
